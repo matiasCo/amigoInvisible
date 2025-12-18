@@ -1,15 +1,228 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Amigo Invisible</title>
-</head>
-<body>
-  <h2>Amigo Invisible</h2>
+  <meta charset="UTF-8" />
+  <title>🎄 Amigo Invisible</title>
 
-  <p id="result"></p>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      min-height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #2b2b2b;
+
+      /* 🎄 Fondo con patrón animado */
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,.08) 2px, transparent 3px),
+        radial-gradient(circle at 80% 40%, rgba(255,255,255,.06) 2px, transparent 3px),
+        radial-gradient(circle at 50% 70%, rgba(255,255,255,.05) 2px, transparent 3px),
+        linear-gradient(to bottom, #0b3d2e, #06291f);
+
+      background-size: 120px 120px, 160px 160px, 200px 200px, cover;
+      animation: patternMove 90s linear infinite;
+    }
+
+    @keyframes patternMove {
+      from {
+        background-position:
+          0 0,
+          0 0,
+          0 0,
+          center;
+      }
+      to {
+        background-position:
+          300px 300px,
+          -400px 200px,
+          200px -300px,
+          center;
+      }
+    }
+
+    /* ❄️ NIEVE */
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: white;
+      opacity: 0.8;
+      animation: fall linear infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes fall {
+      to { transform: translateY(110vh); }
+    }
+
+    /* 🛷 TRINEO */
+    .sleigh {
+      position: fixed;
+      top: 12%;
+      left: -30px;
+      font-size: 3rem;
+      animation: fly 18s linear infinite;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    @keyframes fly {
+      from { transform: translateX(-300px); }
+      to { transform: translateX(110vw); }
+    }
+
+    /* 🎁 CARD */
+    .card {
+      position: relative;
+      background: #fffaf2;
+      max-width: 460px;
+      width: 90%;
+      padding: 2.8rem 2.4rem 2.4rem;
+      border-radius: 26px;
+      box-shadow: 0 30px 60px rgba(0,0,0,.4);
+      text-align: center;
+      border: 4px solid #c1121f;
+      z-index: 5;
+    }
+
+    h1 {
+      margin-top: 1rem;
+      font-size: 2.1rem;
+      color: #c1121f;
+    }
+
+    .rules {
+      background: #f4efe6;
+      border-radius: 16px;
+      padding: 1.2rem;
+      margin: 1.8rem 0;
+      text-align: left;
+      font-size: 0.95rem;
+      border-left: 6px solid #c1121f;
+    }
+
+    /* 🎄 LUCES */
+    .lights {
+      position: absolute;
+      top: -22px;
+      left: 8px;
+      right: 8px;
+      display: flex;
+      justify-content: space-between;
+      pointer-events: none;
+    }
+
+    .lights span {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      animation: blink 2s infinite;
+      box-shadow: 0 0 10px currentColor;
+    }
+
+    .lights span:nth-child(4n+1) { background: #ff595e; animation-delay: 0s; }
+    .lights span:nth-child(4n+2) { background: #ffca3a; animation-delay: .3s; }
+    .lights span:nth-child(4n+3) { background: #8ac926; animation-delay: .6s; }
+    .lights span:nth-child(4n+4) { background: #1982c4; animation-delay: .9s; }
+
+    @keyframes blink {
+      0%,100% { opacity: .4; }
+      50% { opacity: 1; }
+    }
+
+    /* 🎯 BOTÓN */
+    .reveal-btn {
+      margin-top: 1.8rem;
+      padding: 1rem 1.4rem;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      background: linear-gradient(135deg, #c1121f, #e63946);
+      color: white;
+      box-shadow: 0 10px 20px rgba(0,0,0,.25);
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+
+    .reveal-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 26px rgba(0,0,0,.35);
+    }
+
+    .reveal-btn:active {
+      transform: scale(0.95);
+    }
+
+    .result {
+      margin-top: 1.6rem;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #0b3d2e;
+      display: none;
+    }
+
+    .friend {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #c1121f;
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="sleigh">🎅🛷✨</div>
+
+  <div class="card">
+
+    <div class="lights">
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span>
+    </div>
+
+    <h1>🎄 Amigo Invisible 🎁</h1>
+
+    <div class="rules">
+      <strong>🎯 Regla 1</strong>
+      <ul>
+        <li>El valor está en el juego, no en el precio.</li>
+        <li>Regalo hasta <strong>$500</strong>.</li>
+      </ul>
+
+      <strong>🤪 Regla 2: Las pistas</strong>
+      <ul>
+        <li>3 pistas locas</li>
+        <li>bien chistosas</li>
+        <li>para adivinarte!</li>
+      </ul>
+    </div>
+
+    <button id="revealBtn" class="reveal-btn">
+      🎁 Pinchame para saber tu amigo invisible
+    </button>
+
+    <div id="result" class="result"></div>
+    <div id="friend" class="friend"></div>
+  </div>
 
   <script>
+    /* ❄️ NIEVE */
+    for (let i = 0; i < 40; i++) {
+      const snow = document.createElement("div");
+      snow.className = "snowflake";
+      snow.textContent = "❄";
+      snow.style.left = Math.random() * 100 + "vw";
+      snow.style.animationDuration = 5 + Math.random() * 10 + "s";
+      snow.style.fontSize = .5 + Math.random() * 1.5 + "em";
+      document.body.appendChild(snow);
+    }
+
     const participants = [
       { name: "Ana", key: "sol", friend: "Carlos" },
       { name: "Carlos", key: "luna", friend: "María" },
@@ -23,25 +236,32 @@
       { name: "Martín", key: "roca", friend: "Ana" }
     ];
 
-    function getQueryParam(param) {
-      const params = new URLSearchParams(window.location.search);
-      return params.get(param);
-    }
-
-    const keyFromUrl = getQueryParam("key");
+    const key = new URLSearchParams(window.location.search).get("key");
+    const btn = document.getElementById("revealBtn");
     const result = document.getElementById("result");
+    const friend = document.getElementById("friend");
 
-    if (!keyFromUrl) {
-      result.textContent = "No se encontró la palabra clave en la URL.";
-    } else {
-      const person = participants.find(p => p.key === keyFromUrl);
-
-      if (!person) {
-        result.textContent = "Palabra clave inválida.";
-      } else {
-        result.textContent = `Hola ${person.name}, tu amigo invisible es: ${person.friend}`;
+    btn.addEventListener("click", () => {
+      if (!key) {
+        result.style.display = "block";
+        result.textContent = "❌ No se encontró la palabra secreta.";
+        return;
       }
-    }
+
+      const person = participants.find(p => p.key === key);
+      if (!person) {
+        result.style.display = "block";
+        result.textContent = "❌ Palabra secreta inválida.";
+        return;
+      }
+
+      btn.style.display = "none";
+      result.style.display = "block";
+      friend.style.display = "block";
+      result.textContent = `🎉 Hola ${person.name}, tu amigo invisible es:`;
+      friend.textContent = person.friend;
+    });
   </script>
+
 </body>
 </html>
