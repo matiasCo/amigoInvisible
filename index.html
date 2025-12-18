@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>🎄 Amigo Invisible</title>
 
   <style>
@@ -13,34 +14,13 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #2b2b2b;
 
-      /* 🎄 Fondo con patrón animado */
       background:
         radial-gradient(circle at 20% 20%, rgba(255,255,255,.08) 2px, transparent 3px),
         radial-gradient(circle at 80% 40%, rgba(255,255,255,.06) 2px, transparent 3px),
         radial-gradient(circle at 50% 70%, rgba(255,255,255,.05) 2px, transparent 3px),
         linear-gradient(to bottom, #0b3d2e, #06291f);
-
       background-size: 120px 120px, 160px 160px, 200px 200px, cover;
-      animation: patternMove 90s linear infinite;
-    }
-
-    @keyframes patternMove {
-      from {
-        background-position:
-          0 0,
-          0 0,
-          0 0,
-          center;
-      }
-      to {
-        background-position:
-          300px 300px,
-          -400px 200px,
-          200px -300px,
-          center;
-      }
     }
 
     /* ❄️ NIEVE */
@@ -61,8 +41,8 @@
     /* 🛷 TRINEO */
     .sleigh {
       position: fixed;
-      top: 12%;
-      left: -30px;
+      top: 10%;
+      left: -300px;
       font-size: 3rem;
       animation: fly 18s linear infinite;
       pointer-events: none;
@@ -74,37 +54,26 @@
       to { transform: translateX(110vw); }
     }
 
-    /* 🎁 CARD */
+    /* 🎁 TARJETA */
     .card {
       position: relative;
       background: #fffaf2;
-      max-width: 460px;
       width: 90%;
-      padding: 2.8rem 2.4rem 2.4rem;
+      max-width: 480px;
+      padding: 2.6rem 2rem 2.2rem;
       border-radius: 26px;
       box-shadow: 0 30px 60px rgba(0,0,0,.4);
-      text-align: center;
       border: 4px solid #c1121f;
       z-index: 5;
+      text-align: center;
+
+      --font-scale: 1;
+      transform: scale(var(--font-scale));
+      transform-origin: center;
+      transition: transform 0.2s ease;
     }
 
-    h1 {
-      margin-top: 1rem;
-      font-size: 2.1rem;
-      color: #c1121f;
-    }
-
-    .rules {
-      background: #f4efe6;
-      border-radius: 16px;
-      padding: 1.2rem;
-      margin: 1.8rem 0;
-      text-align: left;
-      font-size: 0.95rem;
-      border-left: 6px solid #c1121f;
-    }
-
-    /* 🎄 LUCES */
+    /* 💡 LUCES */
     .lights {
       position: absolute;
       top: -22px;
@@ -116,8 +85,8 @@
     }
 
     .lights span {
-      width: 14px;
-      height: 14px;
+      width: 16px;
+      height: 16px;
       border-radius: 50%;
       animation: blink 2s infinite;
       box-shadow: 0 0 10px currentColor;
@@ -133,11 +102,28 @@
       50% { opacity: 1; }
     }
 
-    /* 🎯 BOTÓN */
+    h1 {
+      margin-top: 1.2rem;
+      font-size: clamp(2rem, 6vw, 2.4rem);
+      color: #c1121f;
+    }
+
+    .rules {
+      margin: 1.6rem 0;
+      padding: 1.2rem;
+      background: #f4efe6;
+      border-radius: 16px;
+      text-align: left;
+      font-size: clamp(1rem, 3.5vw, 1.1rem);
+      border-left: 6px solid #c1121f;
+    }
+
+    /* 🎯 BOTÓN PRINCIPAL */
     .reveal-btn {
-      margin-top: 1.8rem;
-      padding: 1rem 1.4rem;
-      font-size: 1rem;
+      width: 100%;
+      margin-top: 1.6rem;
+      padding: 1.2rem;
+      font-size: clamp(1.1rem, 4vw, 1.25rem);
       font-weight: 700;
       border-radius: 999px;
       border: none;
@@ -145,28 +131,32 @@
       background: linear-gradient(135deg, #c1121f, #e63946);
       color: white;
       box-shadow: 0 10px 20px rgba(0,0,0,.25);
-      transition: transform .15s ease, box-shadow .15s ease;
     }
 
-    .reveal-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 26px rgba(0,0,0,.35);
-    }
-
-    .reveal-btn:active {
-      transform: scale(0.95);
+    /* 👓 BOTÓN AGRANDAR LETRA */
+    .font-btn {
+      width: 100%;
+      margin-top: 0.8rem;
+      padding: 0.9rem;
+      font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+      font-weight: 600;
+      border-radius: 999px;
+      border: 2px dashed #0b3d2e;
+      background: #fff;
+      color: #0b3d2e;
+      cursor: pointer;
     }
 
     .result {
-      margin-top: 1.6rem;
-      font-size: 1.15rem;
-      font-weight: 600;
-      color: #0b3d2e;
+      margin-top: 1.4rem;
+      font-size: clamp(1.1rem, 4vw, 1.3rem);
       display: none;
+      color: #0b3d2e;
     }
 
     .friend {
-      font-size: 1.6rem;
+      margin-top: .4rem;
+      font-size: clamp(1.8rem, 6vw, 2.2rem);
       font-weight: 800;
       color: #c1121f;
       display: none;
@@ -191,15 +181,15 @@
     <div class="rules">
       <strong>🎯 Regla 1</strong>
       <ul>
-        <li>El valor está en el juego, no en el precio.</li>
-        <li>Regalo hasta <strong>$500</strong>.</li>
+        <li>El valor está en el juego, no en el precio</li>
+        <li>Regalo hasta <strong>$500</strong></li>
       </ul>
 
       <strong>🤪 Regla 2: Las pistas</strong>
       <ul>
         <li>3 pistas locas</li>
         <li>bien chistosas</li>
-        <li>para adivinarte!</li>
+        <li>para adivinarte</li>
       </ul>
     </div>
 
@@ -207,8 +197,13 @@
       🎁 Pinchame para saber tu amigo invisible
     </button>
 
+    <button id="fontBtn" class="font-btn">
+      👓 Agrandame la letra que soy viejo
+    </button>
+
     <div id="result" class="result"></div>
     <div id="friend" class="friend"></div>
+
   </div>
 
   <script>
@@ -218,11 +213,12 @@
       snow.className = "snowflake";
       snow.textContent = "❄";
       snow.style.left = Math.random() * 100 + "vw";
-      snow.style.animationDuration = 5 + Math.random() * 10 + "s";
-      snow.style.fontSize = .5 + Math.random() * 1.5 + "em";
+      snow.style.animationDuration = 6 + Math.random() * 10 + "s";
+      snow.style.fontSize = .6 + Math.random() * 1.4 + "em";
       document.body.appendChild(snow);
     }
 
+    /* 👥 PARTICIPANTES */
     const participants = [
       { name: "Ana", key: "sol", friend: "Carlos" },
       { name: "Carlos", key: "luna", friend: "María" },
@@ -238,8 +234,24 @@
 
     const key = new URLSearchParams(window.location.search).get("key");
     const btn = document.getElementById("revealBtn");
+    const fontBtn = document.getElementById("fontBtn");
     const result = document.getElementById("result");
     const friend = document.getElementById("friend");
+    const card = document.querySelector(".card");
+
+    let fontScale = 1;
+
+    fontBtn.addEventListener("click", () => {
+      if (fontScale >= 1.35) return;
+
+      fontScale += 0.08;
+      card.style.setProperty("--font-scale", fontScale);
+
+      if (navigator.vibrate) {
+        navigator.vibrate(50);
+      }
+    });
+
 
     btn.addEventListener("click", () => {
       if (!key) {
@@ -253,6 +265,10 @@
         result.style.display = "block";
         result.textContent = "❌ Palabra secreta inválida.";
         return;
+      }
+
+      if (navigator.vibrate) {
+        navigator.vibrate([100, 50, 100]);
       }
 
       btn.style.display = "none";
