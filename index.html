@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Amigo Invisible</title>
+</head>
+<body>
+  <h2>Amigo Invisible</h2>
+
+  <p id="result"></p>
+
+  <script>
+    const participants = [
+      { name: "Ana", key: "sol", friend: "Carlos" },
+      { name: "Carlos", key: "luna", friend: "María" },
+      { name: "María", key: "estrella", friend: "Juan" },
+      { name: "Juan", key: "nube", friend: "Sofía" },
+      { name: "Sofía", key: "mar", friend: "Pedro" },
+      { name: "Pedro", key: "arena", friend: "Lucía" },
+      { name: "Lucía", key: "viento", friend: "Diego" },
+      { name: "Diego", key: "fuego", friend: "Laura" },
+      { name: "Laura", key: "hoja", friend: "Martín" },
+      { name: "Martín", key: "roca", friend: "Ana" }
+    ];
+
+    function getQueryParam(param) {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(param);
+    }
+
+    const keyFromUrl = getQueryParam("key");
+    const result = document.getElementById("result");
+
+    if (!keyFromUrl) {
+      result.textContent = "No se encontró la palabra clave en la URL.";
+    } else {
+      const person = participants.find(p => p.key === keyFromUrl);
+
+      if (!person) {
+        result.textContent = "Palabra clave inválida.";
+      } else {
+        result.textContent = `Hola ${person.name}, tu amigo invisible es: ${person.friend}`;
+      }
+    }
+  </script>
+</body>
+</html>
