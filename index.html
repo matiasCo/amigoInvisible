@@ -10,28 +10,34 @@
       margin: 0;
       font-family: "Segoe UI", system-ui, sans-serif;
       min-height: 100vh;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      overflow-x: hidden;
+      overflow-y: auto;
+      color: #fff;
+
+      /* 👇 IMPORTANTE */
+      --font-scale: 1;
 
       background:
         radial-gradient(circle at 20% 20%, rgba(255,255,255,.08) 2px, transparent 3px),
         radial-gradient(circle at 80% 40%, rgba(255,255,255,.06) 2px, transparent 3px),
         radial-gradient(circle at 50% 70%, rgba(255,255,255,.05) 2px, transparent 3px),
         linear-gradient(to bottom, #0b3d2e, #06291f);
-      background-size: 120px 120px, 160px 160px, 200px 200px, cover;
     }
 
-    /* ❄️ NIEVE */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+
+    /* ❄️ NIEVE (por arriba de todo) */
     .snowflake {
       position: fixed;
       top: -10px;
       color: white;
-      opacity: 0.8;
+      opacity: 0.85;
       animation: fall linear infinite;
       pointer-events: none;
-      z-index: 1;
+      z-index: 9999;
     }
 
     @keyframes fall {
@@ -42,49 +48,137 @@
     .sleigh {
       position: fixed;
       top: 10%;
-      left: -300px;
+      left: 0;
       font-size: 3rem;
       animation: fly 18s linear infinite;
       pointer-events: none;
       z-index: 2;
     }
 
+
     @keyframes fly {
       from { transform: translateX(-300px); }
-      to { transform: translateX(110vw); }
+      to   { transform: translateX(100vw); }
     }
 
-    /* 🎁 TARJETA */
-    .card {
-      position: relative;
-      background: #fffaf2;
-      width: 90%;
-      max-width: 480px;
-      padding: 2.6rem 2rem 2.2rem;
-      border-radius: 26px;
-      box-shadow: 0 30px 60px rgba(0,0,0,.4);
-      border: 4px solid #c1121f;
-      z-index: 5;
+    /* 📦 CONTENEDOR */
+    .content {
+      font-size: calc(1rem * var(--font-scale));
+      width: 100%;
+      max-width: 520px;
+      padding: 2.2rem 1.6rem 4rem;
+      margin: 0 auto;
+      box-sizing: border-box;
+    }
+
+    h1 {
+      font-size: clamp(
+        calc(2.2rem * var(--font-scale)),
+        7vw,
+        calc(2.6rem * var(--font-scale))
+      );
+      color: #ffdf6c;
+      margin: 0 auto 1rem;
       text-align: center;
+      display: block;
+      width: 100%;
+      text-shadow: 0 4px 10px rgba(0,0,0,.4);
 
-      --font-scale: 1;
-      transform: scale(var(--font-scale));
-      transform-origin: center;
-      transition: transform 0.2s ease;
+      animation:
+        title-enter 0.8s ease-out both,
+        title-breathe 3s ease-in-out infinite;
     }
 
-    /* 💡 LUCES */
-    .lights {
-      position: absolute;
-      top: -22px;
+    h1 .emoji {
+      display: inline-block;
+    }
+
+    h1 .tree {
+      animation: tree-sway 3s ease-in-out infinite;
+      transform-origin: bottom center;
+    }
+
+    h1 .gift {
+      animation: gift-bounce 2.2s ease-in-out infinite;
+    }
+
+    .reindeer {
+      display: inline-block;
+      transform: scaleX(-1);
+    }
+
+    .rules {
+      margin: 1.6rem 0;
+      padding: 1.4rem;
+      background: rgba(0,0,0,.25);
+      border-radius: 18px;
+      text-align: left;
+      font-size: clamp(calc(1.05rem * var(--font-scale)),
+    4vw,
+    calc(1.15rem * var(--font-scale)));
+      line-height: 1.5;
+    }
+
+    /* 🎯 BOTONES */
+    .btn {
+      width: 100%;
+      margin-top: 1.2rem;
+      padding: 1.2rem;
+      font-size: clamp(calc(1.1rem * var(--font-scale)),
+    4vw,
+    calc(1.25rem * var(--font-scale)));
+      font-weight: 700;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .reveal-btn {
+      background: linear-gradient(135deg, #c1121f, #e63946);
+      color: white;
+      box-shadow: 0 10px 20px rgba(0,0,0,.3);
+    }
+
+    .font-btn {
+      background: transparent;
+      border: 2px dashed #ffdf6c;
+      color: #ffdf6c;
+      font-weight: 600;
+    }
+
+    .result {
+      margin-top: 1.8rem;
+      font-size: clamp(calc(1.2rem * var(--font-scale)),
+    4.5vw,
+    calc(1.4rem * var(--font-scale)));
+      display: none;
+    }
+
+    .friend {
+      width: 100%;
+      text-align: center;
+      margin-top: .6rem;
+      font-size: clamp(calc(2rem * var(--font-scale)),
+    7vw,
+    calc(2.4rem * var(--font-scale)));
+      font-weight: 800;
+      color: #ffdf6c;
+      display: none;
+    }
+
+    /* 💡 LUCES ABAJO */
+    .bottom-lights {
+      position: fixed;
+      bottom: 8px;
       left: 8px;
       right: 8px;
       display: flex;
       justify-content: space-between;
       pointer-events: none;
+      z-index: 3;
     }
 
-    .lights span {
+    .bottom-lights span {
       width: 16px;
       height: 16px;
       border-radius: 50%;
@@ -92,97 +186,75 @@
       box-shadow: 0 0 10px currentColor;
     }
 
-    .lights span:nth-child(4n+1) { background: #ff595e; animation-delay: 0s; }
-    .lights span:nth-child(4n+2) { background: #ffca3a; animation-delay: .3s; }
-    .lights span:nth-child(4n+3) { background: #8ac926; animation-delay: .6s; }
-    .lights span:nth-child(4n+4) { background: #1982c4; animation-delay: .9s; }
+    .bottom-lights span:nth-child(4n+1) { background: #ff595e; animation-delay: 0s; }
+    .bottom-lights span:nth-child(4n+2) { background: #ffca3a; animation-delay: .3s; }
+    .bottom-lights span:nth-child(4n+3) { background: #8ac926; animation-delay: .6s; }
+    .bottom-lights span:nth-child(4n+4) { background: #1982c4; animation-delay: .9s; }
 
     @keyframes blink {
       0%,100% { opacity: .4; }
       50% { opacity: 1; }
     }
 
-    h1 {
-      margin-top: 1.2rem;
-      font-size: clamp(2rem, 6vw, 2.4rem);
-      color: #c1121f;
+    @keyframes title-enter {
+      from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.96);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
-    .rules {
-      margin: 1.6rem 0;
-      padding: 1.2rem;
-      background: #f4efe6;
-      border-radius: 16px;
-      text-align: left;
-      font-size: clamp(1rem, 3.5vw, 1.1rem);
-      border-left: 6px solid #c1121f;
+    @keyframes title-breathe {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.04);
+      }
     }
 
-    /* 🎯 BOTÓN PRINCIPAL */
-    .reveal-btn {
-      width: 100%;
-      margin-top: 1.6rem;
-      padding: 1.2rem;
-      font-size: clamp(1.1rem, 4vw, 1.25rem);
-      font-weight: 700;
-      border-radius: 999px;
-      border: none;
-      cursor: pointer;
-      background: linear-gradient(135deg, #c1121f, #e63946);
-      color: white;
-      box-shadow: 0 10px 20px rgba(0,0,0,.25);
+    @keyframes tree-sway {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(-6deg); }
+      75% { transform: rotate(6deg); }
     }
 
-    /* 👓 BOTÓN AGRANDAR LETRA */
-    .font-btn {
-      width: 100%;
-      margin-top: 0.8rem;
-      padding: 0.9rem;
-      font-size: clamp(0.95rem, 3.5vw, 1.1rem);
-      font-weight: 600;
-      border-radius: 999px;
-      border: 2px dashed #0b3d2e;
-      background: #fff;
-      color: #0b3d2e;
-      cursor: pointer;
+    @keyframes gift-bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
     }
 
-    .result {
-      margin-top: 1.4rem;
-      font-size: clamp(1.1rem, 4vw, 1.3rem);
-      display: none;
-      color: #0b3d2e;
-    }
 
-    .friend {
-      margin-top: .4rem;
-      font-size: clamp(1.8rem, 6vw, 2.2rem);
-      font-weight: 800;
-      color: #c1121f;
-      display: none;
-    }
   </style>
 </head>
 
 <body>
 
-  <div class="sleigh">🎅🛷✨</div>
+  <div class="sleigh">
+    🎅🛷
+    <span class="reindeer">🦌🦌</span>
+  </div>
 
-  <div class="card">
+  <div class="content">
 
-    <div class="lights">
-      <span></span><span></span><span></span><span></span><span></span>
-      <span></span><span></span><span></span><span></span><span></span>
-      <span></span><span></span>
-    </div>
-
-    <h1>🎄 Amigo Invisible 🎁</h1>
+    <h1>
+      <span class="emoji tree">🎄</span>
+      Amigo Invisible
+      <span class="emoji gift">🎁</span>
+    </h1>
 
     <div class="rules">
-      <strong>🎯 Regla 1</strong>
+      <strong>👮‍♀️ Regla 0: Participación</strong>
+      <ul>
+        <li>La participación es obligatoria (creeme que ya intenté zafar).</li>
+      </ul>
+      <strong>💰 Regla 1: Monto</strong>
       <ul>
         <li>El valor está en el juego, no en el precio</li>
-        <li>Regalo hasta <strong>$500</strong></li>
+        <li>Regalo hasta <strong>$500</strong> (si es para Matias, puede ser más)</li>
       </ul>
 
       <strong>🤪 Regla 2: Las pistas</strong>
@@ -193,28 +265,34 @@
       </ul>
     </div>
 
-    <button id="revealBtn" class="reveal-btn">
+    <button id="revealBtn" class="btn reveal-btn">
       🎁 Pinchame para saber tu amigo invisible
-    </button>
-
-    <button id="fontBtn" class="font-btn">
-      👓 Agrandame la letra que soy viejo
     </button>
 
     <div id="result" class="result"></div>
     <div id="friend" class="friend"></div>
 
+    <button id="fontBtn" class="btn font-btn">
+      👓 Agrandame la letra que soy viejo
+    </button>
+
+  </div>
+
+  <div class="bottom-lights">
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span>
   </div>
 
   <script>
     /* ❄️ NIEVE */
-    for (let i = 0; i < 40; i++) {
+    for (let i = 0; i < 45; i++) {
       const snow = document.createElement("div");
       snow.className = "snowflake";
       snow.textContent = "❄";
       snow.style.left = Math.random() * 100 + "vw";
       snow.style.animationDuration = 6 + Math.random() * 10 + "s";
-      snow.style.fontSize = .6 + Math.random() * 1.4 + "em";
+      snow.style.fontSize = .6 + Math.random() * 1.6 + "em";
       document.body.appendChild(snow);
     }
 
@@ -237,19 +315,16 @@
     const fontBtn = document.getElementById("fontBtn");
     const result = document.getElementById("result");
     const friend = document.getElementById("friend");
-    const card = document.querySelector(".card");
+    const content = document.querySelector(".content");
 
     let fontScale = 1;
 
     fontBtn.addEventListener("click", () => {
       if (fontScale >= 1.35) return;
-
       fontScale += 0.08;
-      card.style.setProperty("--font-scale", fontScale);
+      document.body.style.setProperty("--font-scale", fontScale);
 
-      if (navigator.vibrate) {
-        navigator.vibrate(50);
-      }
+      if (navigator.vibrate) navigator.vibrate(50);
     });
 
 
@@ -267,9 +342,7 @@
         return;
       }
 
-      if (navigator.vibrate) {
-        navigator.vibrate([100, 50, 100]);
-      }
+      if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
 
       btn.style.display = "none";
       result.style.display = "block";
