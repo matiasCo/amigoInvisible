@@ -168,15 +168,15 @@
 
     /* 💡 LUCES ABAJO */
     .bottom-lights {
-      position: fixed;
-      bottom: 8px;
-      left: 8px;
-      right: 8px;
+      position: relative; /* antes: fixed */
+      bottom: auto;       /* eliminamos */
+      margin-top: 2rem;   /* separarlas un poco del contenido */
       display: flex;
       justify-content: space-between;
       pointer-events: none;
       z-index: 3;
     }
+
 
     .bottom-lights span {
       width: 16px;
